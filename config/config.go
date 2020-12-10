@@ -8,9 +8,12 @@ import (
 type KafkaConfig struct {
     Addrs []string
 }
-type MainConfig struct {
-    HttpPort int
-    HttpHost string
+
+type HttpConfig struct {
+    HttpPort     int
+    HttpHost     string
+    ReadTimeout  time.Duration
+    WriteTimeout time.Duration
 }
 
 type MysqlConfig struct {
@@ -26,9 +29,9 @@ type MysqlConfig struct {
 }
 type UploadConfig struct {
     ImagePrefixUrl string
-    ImageSavePath string
+    ImageSavePath  string
 
-    ImageMaxSize  int
+    ImageMaxSize   int
     ImageAllowExts []string
 
     RuntimeRootPath string
@@ -54,16 +57,18 @@ type RedisConfig struct {
 }
 
 var (
-    Main  MainConfig
-    Mysql MysqlConfig
-    Redis RedisConfig
-    Kafka KafkaConfig
+    Http   HttpConfig
+    Mysql  MysqlConfig
+    Redis  RedisConfig
+    Kafka  KafkaConfig
     Upload UploadConfig
 )
 
 func init() {
-    Main.HttpHost = "127.0.0.1"
-    Main.HttpPort = 8083
+    Http.HttpHost = "127.0.0.1"
+    Http.HttpPort = 8083
+    Http.ReadTimeout = 60 * time.Second
+    Http.WriteTimeout = 60 * time.Second
 
     Mysql.Database = "my_test"
     Mysql.Username = "root"
@@ -79,7 +84,7 @@ func init() {
     Redis.Addr = "127.0.0.1:6379"                  // 主机名+冒号+端口，默认localhost:6379
     Redis.Password = ""                            // 密码
     Redis.DB = 0                                   // redis数据库index
-    Redis.PoolSize = 4                            // 连接池最大socket连接数，默认为4倍CPU数， 4 * runtime.NumCPU
+    Redis.PoolSize = 4                             // 连接池最大socket连接数，默认为4倍CPU数， 4 * runtime.NumCPU
     Redis.MinIdleConns = 2                         // 在启动阶段创建指定数量的Idle连接，并长期维持idle状态的连接数不少于指定数量；。
     Redis.DialTimeout = 5 * time.Second            // 连接建立超时时间，默认5秒。
     Redis.ReadTimeout = 3 * time.Second            // 读超时，默认3秒， -1表示取消读超时
@@ -94,11 +99,10 @@ func init() {
 
     Kafka.Addrs = []string{"127.0.0.1:9092", "127.0.0.1:9093", "127.0.0.1:9094"}
 
-    Upload.ImagePrefixUrl= "http:"+Main.HttpHost+":"+strconv.Itoa(Main.HttpPort)
-    Upload.ImageSavePath ="upload/images/"
+    Upload.ImagePrefixUrl = "http:" + Http.HttpHost + ":" + strconv.Itoa(Http.HttpPort)
+    Upload.ImageSavePath = "upload/images/"
     Upload.ImageMaxSize = 5 * 1024 * 1024
-    Upload.ImageAllowExts = []string{".jpg",".jpeg",".png"}
+    Upload.ImageAllowExts = []string{".jpg", ".jpeg", ".png"}
     Upload.RuntimeRootPath = "runtime/"
-
 
 }
