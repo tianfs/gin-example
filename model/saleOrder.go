@@ -29,7 +29,7 @@ func init(){
 func (this *SaleOrder) List() ([]*SaleOrder, error) {
 
     var data []*SaleOrder
-    if err := db.Mysql.Find(&data).Error; err != nil {
+    if err := db.Mysql.Limit(2).Find(&data).Error; err != nil {
         return nil, err
     }
     return data, nil

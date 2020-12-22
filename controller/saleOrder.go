@@ -2,16 +2,20 @@ package controller
 
 import (
     "fmt"
-    "github.com/gin-gonic/gin"
     "gin-example/service"
     "gin-example/util/e"
+    "github.com/gin-gonic/gin"
 )
 
 type SaleOrder struct {
 }
 
 func (this *SaleOrder) List(c *gin.Context) {
+
+
+
     saleOrderS := service.SaleOrder{}
+
     list, err := saleOrderS.List()
     if err != nil {
         e.FailResponse(c, 999, "错误了")

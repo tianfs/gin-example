@@ -3,8 +3,9 @@ package main
 import (
     "fmt"
     "gin-example/config"
+    "gin-example/cron"
     "gin-example/router"
-    //"github.com/google/gops/agent"
+    // "github.com/google/gops/agent"
     "log"
     "net/http"
 )
@@ -18,6 +19,8 @@ func main() {
     //if err := agent.Listen(agent.Options{}); err != nil {
     //    log.Fatalf("agent.Listen err: %v", err)
     //}
+    //定时任务
+    cron.SetCronJob()
 
     server := &http.Server{
         Addr:           fmt.Sprintf("%s:%d", config.Http.HttpHost, config.Http.HttpPort),
@@ -27,4 +30,7 @@ func main() {
         MaxHeaderBytes: 1 << 20,
     }
     server.ListenAndServe()
+
+
+
 }
