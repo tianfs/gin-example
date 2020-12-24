@@ -20,8 +20,9 @@ type testD struct {
 }
 
 func TestCurl(t *testing.T) {
+    //fmt.Println(int64(8 * time.Millisecond))
     // get_struct();
-    get_map()
+   // get_map()
 
 }
 
