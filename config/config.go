@@ -7,25 +7,28 @@ import (
     "time"
 )
 
-type WxappConfig struct {
+type appConfig struct {
+    Env string
+}
+type wxappConfig struct {
     AppId     string
     AppSecret string
 }
-type DomainConfig struct {
+type domainConfig struct {
     User string
 }
-type KafkaConfig struct {
+type kafkaConfig struct {
     Addrs []string
 }
 
-type HttpConfig struct {
+type httpConfig struct {
     HttpPort     int
     HttpHost     string
     ReadTimeout  time.Duration
     WriteTimeout time.Duration
 }
 
-type MysqlConfig struct {
+type mysqlConfig struct {
     Database string
     Username string
     Password string
@@ -36,7 +39,7 @@ type MysqlConfig struct {
     MaxIdle  int
     MaxOpen  int
 }
-type UploadConfig struct {
+type uploadConfig struct {
     ImagePrefixUrl string
     ImageSavePath  string
 
@@ -45,7 +48,7 @@ type UploadConfig struct {
 
     RuntimeRootPath string
 }
-type RedisConfig struct {
+type redisConfig struct {
     Network            string        // 网络类型，tcp or unix，默认tcp
     Addr               string        // 主机名+冒号+端口，默认localhost:6379
     Password           string        // 密码
@@ -66,13 +69,14 @@ type RedisConfig struct {
 }
 
 var (
-    Http   HttpConfig
-    Mysql  MysqlConfig
-    Redis  RedisConfig
-    Kafka  KafkaConfig
-    Upload UploadConfig
-    Domain DomainConfig
-    Wxapp  WxappConfig
+    Http   httpConfig
+    Mysql  mysqlConfig
+    Redis  redisConfig
+    Kafka  kafkaConfig
+    Upload uploadConfig
+    Domain domainConfig
+    Wxapp  wxappConfig
+    App    appConfig
 )
 
 func Setup() {
@@ -80,6 +84,10 @@ func Setup() {
     if err != nil {
         log.Fatalf("setting.Setup, fail to parse 'config/dev.ini': %v", err)
         os.Exit(1)
+    }
+    if appCfg, err := cfg.GetSection("app"); err == nil {
+
+        App.Env = appCfg.Key("Env").MustString("")
     }
 
     if httpCfg, err := cfg.GetSection("http"); err == nil {
@@ -89,7 +97,6 @@ func Setup() {
         Http.ReadTimeout = time.Duration(httpCfg.Key("ReadTimeout").MustInt(0)) * time.Second
         Http.WriteTimeout = time.Duration(httpCfg.Key("WriteTimeout").MustInt(0)) * time.Second
     }
-
 
     if mysqlCfg, err := cfg.GetSection("mysql"); err == nil {
         Mysql.Database = mysqlCfg.Key("Database").MustString("")
