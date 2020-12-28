@@ -7,7 +7,7 @@ import (
 
 )
 
-func SetCronJob(){
+func Setup(){
     c := cron.New()
     c.AddFunc("*/5 * * * * *", testCron1)
     c.AddFunc("*/6 * * * * *", testCron2)

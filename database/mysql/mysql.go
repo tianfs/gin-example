@@ -1,16 +1,16 @@
-package database
+package mysql
 
 import (
     "fmt"
+    "gin-example/config"
     _ "github.com/go-sql-driver/mysql"
     "github.com/jinzhu/gorm"
     "log"
-    "gin-example/config"
 )
 
 var Mysql *gorm.DB
 
-func init() {
+func Setup() {
     fmt.Println("数据库链接初始化")
 
     fmt.Println(fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&timeout=%s&parseTime=true",

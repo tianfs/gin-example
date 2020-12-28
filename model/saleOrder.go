@@ -1,7 +1,7 @@
 package model
 
 import (
-    db "gin-example/database"
+    "gin-example/database/mysql"
 )
 
 // 销售单
@@ -22,20 +22,20 @@ type SaleOrder struct {
     OperatorName string  `gorm:"not null;size:32;"`
 }
 func init(){
-    if res := db.Mysql.HasTable(&SaleOrder{}); !res {
-        db.Mysql.CreateTable(&SaleOrder{})
-    }
+    /*if res := mysql.Mysql.HasTable(&SaleOrder{}); !res {
+        mysql.Mysql.CreateTable(&SaleOrder{})
+    }*/
 }
 func (this *SaleOrder) List() ([]*SaleOrder, error) {
 
     var data []*SaleOrder
-    if err := db.Mysql.Limit(2).Find(&data).Error; err != nil {
+    if err := mysql.Mysql.Limit(2).Find(&data).Error; err != nil {
         return nil, err
     }
     return data, nil
 }
 func (this *SaleOrder) Create() (int,error) {
-    res := db.Mysql.Create(this);
+    res := mysql.Mysql.Create(this);
 
     if  res.Error != nil {
         // 最后返回json格式数据
@@ -46,7 +46,7 @@ func (this *SaleOrder) Create() (int,error) {
 
 func (this *SaleOrder) Update(id int) error {
 
-    if err := db.Mysql.Model(&SaleOrder{}).Where("id = ? ", id).Update(this).Error; err != nil {
+    if err := mysql.Mysql.Model(&SaleOrder{}).Where("id = ? ", id).Update(this).Error; err != nil {
         return err
     }
 
@@ -55,7 +55,7 @@ func (this *SaleOrder) Update(id int) error {
 
 func (this *SaleOrder) Delete(id int) error {
 
-    if err := db.Mysql.Where("id = ? ", id).Delete(&SaleOrder{}).Error; err != nil {
+    if err := mysql.Mysql.Where("id = ? ", id).Delete(&SaleOrder{}).Error; err != nil {
         return err
     }
 

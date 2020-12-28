@@ -1,14 +1,14 @@
-package database
+package redis
 
 import (
     "fmt"
-    "github.com/go-redis/redis"
     "gin-example/config"
+    "github.com/go-redis/redis"
 )
 
 var Redis *redis.Client
 
-func init() {
+func Setup() {
     Redis = redis.NewClient(&redis.Options{
         Network:            config.Redis.Network,            // 网络类型，tcp or unix，默认tcp
         Addr:               config.Redis.Addr,               // 主机名+冒号+端口，默认localhost:6379
