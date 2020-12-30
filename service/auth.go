@@ -1,6 +1,8 @@
 package service
 
-import "gin-example/util"
+import (
+    "gin-example/util/jwt"
+)
 
 func init() {
 
@@ -12,7 +14,7 @@ type Auth struct {
 }
 
 func (this *Auth) GetToken() (string, error) {
-    token, err := util.GenerateToken("username", "password")
+    token, err := jwt.GenerateToken("username", "password")
     if err != nil {
         return "", err
     }

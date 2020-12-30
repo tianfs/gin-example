@@ -1,10 +1,10 @@
 package jwt
 
 import (
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	"gin-example/util"
-	"gin-example/util/e"
+    "gin-example/util/e"
+    jwt2 "gin-example/util/jwt"
+    "github.com/dgrijalva/jwt-go"
+    "github.com/gin-gonic/gin"
 )
 
 // JWT is jwt middleware
@@ -17,7 +17,7 @@ func JWT() gin.HandlerFunc {
 		if token == "" {
 			code = e.INVALID_PARAMS
 		} else {
-			_, err := util.ParseToken(token)
+			_, err := jwt2.ParseToken(token)
 			if err != nil {
 				switch err.(*jwt.ValidationError).Errors {
 				case jwt.ValidationErrorExpired:
