@@ -7,15 +7,16 @@ import (
     "gin-example/database/mysql"
     "gin-example/database/redis"
     "gin-example/router"
-    // "github.com/google/gops/agent"
-    "log"
+    "gin-example/util/logger"
+    "github.com/gin-gonic/gin"
+
     "net/http"
 )
 
 func init() {
-    fmt.Println("main包 init")
-    log.Println("log:main包 init")
+
     config.Setup()
+    logger.Setup()
     mysql.Setup()
     redis.Setup()
     cron.Setup()
@@ -25,6 +26,10 @@ func main() {
     //if err := agent.Listen(agent.Options{}); err != nil {
     //    log.Fatalf("agent.Listen err: %v", err)
     //}
+
+    if config.App.Env == "prod" {
+        gin.SetMode(gin.ReleaseMode)
+    }
     fmt.Println(fmt.Sprintf("%s:%d", config.Http.HttpHost, config.Http.HttpPort))
     server := &http.Server{
         Addr:           fmt.Sprintf("%s:%d", config.Http.HttpHost, config.Http.HttpPort),
