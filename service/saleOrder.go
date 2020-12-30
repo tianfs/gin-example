@@ -2,10 +2,10 @@ package service
 
 import (
     "fmt"
+    "gin-example/model"
+    "gin-example/util/mq"
     "github.com/Shopify/sarama"
     "sync"
-    "gin-example/model"
-    "gin-example/mq"
     "time"
 )
 
