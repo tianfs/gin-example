@@ -110,7 +110,7 @@ func Setup() {
         Http.ReadTimeout = Http.ReadTimeout * time.Second
         Http.WriteTimeout = Http.WriteTimeout * time.Second
     } else {
-        panic(err)
+        os.Exit(2)
     }
 
     // mysql配置
@@ -149,7 +149,7 @@ func Setup() {
     //日志配置
     err = cfg.Section("logger").MapTo(&Logger)
     if err != nil {
-        panic(err)
+        os.Exit(3)
     }
 
 }
