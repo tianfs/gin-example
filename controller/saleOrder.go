@@ -5,14 +5,18 @@ import (
     "gin-example/service"
     "gin-example/util/e"
     "github.com/gin-gonic/gin"
+    "log"
+    "time"
 )
 
 type SaleOrder struct {
 }
 
 func (this *SaleOrder) List(c *gin.Context) {
-
-
+    time.Sleep(3 * time.Second)
+    e.SuccessResponse(c, "11112")
+    log.Println("List echo  success:11112")
+    return;
 
     saleOrderS := service.SaleOrder{}
 

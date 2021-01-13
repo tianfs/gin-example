@@ -27,6 +27,7 @@ type httpConfig struct {
     HttpHost     string
     ReadTimeout  time.Duration
     WriteTimeout time.Duration
+    RunMode      string
 }
 
 type mysqlConfig struct {
@@ -133,7 +134,6 @@ func Setup() {
     // kafka配置
     cfg.Section("kafka").MapTo(&Kafka)
 
-
     // 文件上传配置
     err = cfg.Section("upload").MapTo(&Upload)
     if err == nil {
@@ -146,7 +146,7 @@ func Setup() {
     // 微信小程序配置
     cfg.Section("wxapp").MapTo(&Wxapp)
 
-    //日志配置
+    // 日志配置
     err = cfg.Section("logger").MapTo(&Logger)
     if err != nil {
         os.Exit(3)

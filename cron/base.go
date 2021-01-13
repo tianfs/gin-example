@@ -3,8 +3,6 @@ package cron
 import (
     "fmt"
     "github.com/robfig/cron"
-
-
 )
 
 func Setup(){
@@ -16,7 +14,7 @@ func Setup(){
 }
 
 func testCron1(){
-    fmt.Println("testCron1 Run models.CleanAllTag...")
+    fmt.Println("testCron111 Run models.CleanAllTag...")
 }
 func testCron2(){
     fmt.Println("testCron2 Run models.CleanAllTag...")
