@@ -14,6 +14,7 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/onsi/ginkgo v1.14.2 // indirect
 	github.com/onsi/gomega v1.10.4 // indirect
+	github.com/parnurzeal/gorequest v0.2.16
 	github.com/robfig/cron v1.2.0
 	github.com/shirou/gopsutil v3.20.11+incompatible // indirect
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
@@ -21,4 +22,5 @@ require (
 	github.com/swaggo/swag v1.7.0
 	go.uber.org/zap v1.16.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
+	moul.io/http2curl v1.0.0 // indirect
 )
