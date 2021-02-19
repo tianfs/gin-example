@@ -6,7 +6,7 @@ import (
 )
 
 // post请求
-func PostJson(url string, params *map[string]interface{}) (gorequest.Response, []byte, []error) {
+func PostJson(url string, params *map[string]string) (gorequest.Response, []byte, []error) {
     request := gorequest.New()
     resp, body, errs := request.Post(url).
         Set("Content-Type", "application/json").
@@ -20,7 +20,7 @@ func PostJson(url string, params *map[string]interface{}) (gorequest.Response, [
 }
 
 // postForm请求
-func PostForm(url string, params *map[string]interface{}) (gorequest.Response, []byte, []error)  {
+func PostForm(url string, params *map[string]string) (gorequest.Response, []byte, []error)  {
     request := gorequest.New()
 
     resp, body, errs := request.Post(url).
@@ -33,7 +33,7 @@ func PostForm(url string, params *map[string]interface{}) (gorequest.Response, [
     return resp, body, errs
 
 }
-func Get(url string, params *map[string]interface{}) (gorequest.Response, []byte, []error)  {
+func Get(url string, params *map[string]string) (gorequest.Response, []byte, []error)  {
     request := gorequest.New()
     resp, body, errs := request.Get(url).
         Send(params).
