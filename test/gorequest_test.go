@@ -1,7 +1,6 @@
 package test
 
 import (
-    "gin-example/util/request/gorequest"
     "gin-example/util/request/resty"
     "testing"
 )
@@ -16,13 +15,11 @@ func TestGoRequestPost(t *testing.T) {
     params := map[string]string{
         "Safari": "12321323",
     }
-    params["type"]="Get";
-    gorequest.Get(url, &params)
-    params["type"]="PostForm";
-    gorequest.PostForm(url, &params)
-    params["type"]="PostJson";
-    gorequest.PostJson(url, &params)
-
+    params["type"] = "Get"
     resty.Get(url, params)
+    params["type"] = "PostForm"
+    resty.PostForm(url, params)
+    params["type"] = "PostJson"
+    resty.PostJson(url, params)
 
 }
