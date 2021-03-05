@@ -1,6 +1,7 @@
 package router
 
 import (
+    "gin-example/middleware/recovery"
     "github.com/gin-gonic/gin"
     swaggerFiles "github.com/swaggo/files"
     ginSwagger "github.com/swaggo/gin-swagger"
@@ -12,7 +13,10 @@ import (
 
 func SetRouter() *gin.Engine {
     r := gin.Default()
+    //增加请求中panic拦截防止进程退出
+    r.Use(recovery.Recovery())
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
     authG := r.Group("/auth")
     {
         var authC controller.Auth
@@ -20,6 +24,7 @@ func SetRouter() *gin.Engine {
         authG.GET("/getToken", authC.GetToken)
 
     }
+
     saleOrderG := r.Group("/saleOrder")
     //saleOrderG.Use(jwt.JWT());
     {
@@ -33,6 +38,7 @@ func SetRouter() *gin.Engine {
         saleOrderG.POST("/kafkaProducer", saleOrderC.KafkaProducer)
 
     }
+
     uploadG := r.Group("/upload")
     {
         var uploadC controller.Upload
