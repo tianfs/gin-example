@@ -147,7 +147,6 @@ func Panic(args ...interface{}) {
 func Panicf(template string, args ...interface{}) {
 
     log.Panicf(template, args...)
-
 }
 
 func Fatal(args ...interface{}) {

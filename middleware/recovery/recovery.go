@@ -1,7 +1,6 @@
 package recovery
 
 import (
-    "fmt"
     "gin-example/util/logger"
     "github.com/gin-gonic/gin"
     "runtime"
@@ -15,8 +14,7 @@ func Recovery() gin.HandlerFunc {
                 const size = 64 << 10
                 buf := make([]byte, size)
                 buf = buf[:runtime.Stack(buf, false)]
-                pl := fmt.Sprint("http call panic:服务发生错误\n%v\n%s\n", err, buf)
-                logger.Panic(pl)
+                logger.Errorf("http call panic:服务发生错误\n%v\n%s\n", err, buf)
                 c.AbortWithStatus(500)
                 return
             }
