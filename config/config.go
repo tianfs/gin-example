@@ -40,6 +40,7 @@ type mysqlConfig struct {
     Charset  string
     MaxIdle  int
     MaxOpen  int
+    RunMode    string
 }
 type uploadConfig struct {
     ImagePrefixUrl string
@@ -135,7 +136,7 @@ func Setup() {
     cfg.Section("kafka").MapTo(&Kafka)
 
     // 文件上传配置
-    err = cfg.Section("upload").MapTo(&Upload)
+    err = cfg.Section("uploadTool").MapTo(&Upload)
     if err == nil {
         Upload.ImageMaxSize = Upload.ImageMaxSize * 1024 * 1024
     }

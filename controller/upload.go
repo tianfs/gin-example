@@ -3,12 +3,14 @@ package controller
 import (
     "github.com/gin-gonic/gin"
     "gin-example/util/e"
-    "gin-example/util/upload"
+    "gin-example/util/uploadTool"
 )
 
 type Upload struct {
 }
-
+func NewUpload() Upload {
+    return Upload{};
+}
 func (this *Upload) Image(c *gin.Context) {
 
 
@@ -24,21 +26,21 @@ func (this *Upload) Image(c *gin.Context) {
     }
 
 
-    imageName := upload.GetImageName(image.Filename)
-    fullPath := upload.GetImageFullPath()
-    savePath := upload.GetImagePath()
+    imageName := uploadTool.GetImageName(image.Filename)
+    fullPath := uploadTool.GetImageFullPath()
+    savePath := uploadTool.GetImagePath()
 
     src := fullPath + imageName
-    if !upload.CheckImageExt(imageName) {
+    if !uploadTool.CheckImageExt(imageName) {
         e.FailResponse(c,4)
         return
     }
-    if !upload.CheckImageSize(file) {
+    if !uploadTool.CheckImageSize(file) {
         e.FailResponse(c,1)
         return
     }
 
-    err1 := upload.CheckImage(fullPath)
+    err1 := uploadTool.CheckImage(fullPath)
     if err1 != nil{
         e.FailResponse(c,2)
         return
@@ -49,7 +51,7 @@ func (this *Upload) Image(c *gin.Context) {
         return
     }
     data := make(map[string]string)
-    data["image_url"] = upload.GetImageFullUrl(imageName)
+    data["image_url"] = uploadTool.GetImageFullUrl(imageName)
     data["image_save_url"] = savePath + imageName
     e.SuccessResponse(c, data)
 }

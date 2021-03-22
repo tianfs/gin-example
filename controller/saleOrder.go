@@ -11,8 +11,11 @@ import (
 
 type SaleOrder struct {
 }
-
+func NewSaleOrder() SaleOrder {
+    return SaleOrder{};
+}
 func (this *SaleOrder) List(c *gin.Context) {
+    log.Panic("da");
     time.Sleep(3 * time.Second)
     e.SuccessResponse(c, "11112")
     log.Println("List echo  success:11112")

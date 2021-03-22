@@ -20,6 +20,7 @@ require (
 	github.com/onsi/ginkgo v1.14.2 // indirect
 	github.com/onsi/gomega v1.10.4 // indirect
 	github.com/parnurzeal/gorequest v0.2.16
+	github.com/pkg/errors v0.9.1
 	github.com/robfig/cron v1.2.0
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect

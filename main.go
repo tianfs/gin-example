@@ -35,7 +35,6 @@ func main() {
     }
 
     gin.SetMode(config.Http.RunMode)
-
     server := &http.Server{
         Addr:           fmt.Sprintf("%s:%d", config.Http.HttpHost, config.Http.HttpPort),
         Handler:        router.SetRouter(),
@@ -46,7 +45,7 @@ func main() {
     go func() {
         // 服务连接
         if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-            log.Fatalf("listen: %s\n", err)
+            logger.Errorf("listen: %s\n", err)
         }
     }()
     // 平滑重启

@@ -8,7 +8,9 @@ import (
 
 type Auth struct {
 }
-
+func NewAuth() Auth {
+    return Auth{};
+}
 func (this *Auth) GetToken(c *gin.Context) {
     AuthS := service.Auth{}
     token, err := AuthS.GetToken()
