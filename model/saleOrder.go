@@ -1,7 +1,7 @@
 package model
 
 import (
-    "gin-example/database/mysql"
+    "gin-example/util/database/mysql"
 )
 
 // 销售单
