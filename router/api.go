@@ -5,6 +5,7 @@ import (
     _ "gin-example/docs"
     "gin-example/middleware/recovery"
     "gin-example/util/uploadTool"
+    "github.com/gin-contrib/pprof"
     "github.com/gin-gonic/gin"
     swaggerFiles "github.com/swaggo/files"
     ginSwagger "github.com/swaggo/gin-swagger"
@@ -13,6 +14,7 @@ import (
 
 func SetRouter() *gin.Engine {
     r := gin.Default()
+    pprof.Register(r) // 性能
     //增加请求中panic拦截防止进程退出
     r.Use(recovery.Recovery())
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

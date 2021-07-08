@@ -15,3 +15,6 @@
 vendor/
 config/dev.yaml
 runtime/*
+
+#ide
+.DS_Store

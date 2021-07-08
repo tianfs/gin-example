@@ -4,14 +4,15 @@ import (
     "context"
     "fmt"
     "gin-example/config"
+    "gin-example/cron"
     "gin-example/router"
     "gin-example/util/cache/redis"
     "gin-example/util/database/mysql"
     "gin-example/util/logger"
     "github.com/gin-gonic/gin"
-    "github.com/google/gops/agent"
     "log"
     "net/http"
+
     "os"
     "os/signal"
     "syscall"
@@ -24,15 +25,15 @@ func init() {
     logger.Setup()
     mysql.Setup()
     redis.Setup()
-    // cron.Setup()
+     cron.Setup()
 }
 func main() {
     // 进程诊断工具 gops
-    if err := agent.Listen(agent.Options{
+    /*if err := agent.Listen(agent.Options{
         ShutdownCleanup: true,
     }); err != nil {
         log.Fatalf("agent.Listen err: %v", err)
-    }
+    }*/
 
     gin.SetMode(config.Http.RunMode)
     server := &http.Server{
