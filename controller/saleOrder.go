@@ -5,22 +5,9 @@ import (
     "gin-example/service"
     "gin-example/util/e"
     "github.com/gin-gonic/gin"
-    "log"
-    "time"
 )
 
-type SaleOrder struct {
-}
-func NewSaleOrder() SaleOrder {
-    return SaleOrder{};
-}
-func (this *SaleOrder) List(c *gin.Context) {
-    log.Panic("da");
-    time.Sleep(3 * time.Second)
-    e.SuccessResponse(c, "11112")
-    log.Println("List echo  success:11112")
-    return;
-
+func  List(c *gin.Context) {
     saleOrderS := service.SaleOrder{}
 
     list, err := saleOrderS.List()
@@ -45,7 +32,7 @@ type SaleOrderCreate struct {
     Type         int     `form:"type" binding:"required"`
 }
 
-func (this *SaleOrder) Create(c *gin.Context) {
+func Create(c *gin.Context) {
 
     var from SaleOrderCreate
     if err := c.ShouldBind(&from); err != nil {
@@ -88,7 +75,7 @@ type SaleOrderUpdata struct {
     Type         int     `form:"type" binding:"required"`
 }
 
-func (this *SaleOrder) Update(c *gin.Context) {
+func  Update(c *gin.Context) {
     var from SaleOrderUpdata
     if err := c.ShouldBind(&from); err != nil {
         e.FailResponse(c, 999, fmt.Sprint(err.Error()))
@@ -117,7 +104,7 @@ type SaleOrderDelete struct {
     Id int `form:"id" binding:"required"`
 }
 
-func (this *SaleOrder) Delete(c *gin.Context) {
+func Delete(c *gin.Context) {
     var from SaleOrderDelete
     if err := c.ShouldBind(&from); err != nil {
         e.FailResponse(c, 999, fmt.Sprint(err.Error()))
@@ -133,12 +120,12 @@ func (this *SaleOrder) Delete(c *gin.Context) {
     e.SuccessResponse(c, 1)
 }
 
-func (this *SaleOrder) KafkaProducer(c *gin.Context) {
+func KafkaProducer(c *gin.Context) {
     saleOrderS := service.SaleOrder{}
     saleOrderS.KafkaProducer()
     e.SuccessResponse(c, 1)
 }
-func (this *SaleOrder) KafkaAsyncProducer(c *gin.Context) {
+func  KafkaAsyncProducer(c *gin.Context) {
 
     saleOrderS := service.SaleOrder{}
     saleOrderS.KafkaAsyncProducer()

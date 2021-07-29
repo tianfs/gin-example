@@ -6,12 +6,8 @@ import (
     "gin-example/util/uploadTool"
 )
 
-type Upload struct {
-}
-func NewUpload() Upload {
-    return Upload{};
-}
-func (this *Upload) Image(c *gin.Context) {
+
+func Image(c *gin.Context) {
 
 
 

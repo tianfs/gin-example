@@ -1,7 +1,7 @@
 package router
 
 import (
-    "gin-example/controller"
+    ctl "gin-example/controller"
     _ "gin-example/docs"
     "gin-example/middleware/recovery"
     "gin-example/util/uploadTool"
@@ -17,36 +17,38 @@ func SetRouter() *gin.Engine {
     pprof.Register(r) // 性能
     //增加请求中panic拦截防止进程退出
     r.Use(recovery.Recovery())
+
+    //文档访问链接
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+    //文件上传
+    r.StaticFS("/upload/images", http.Dir(uploadTool.GetImageFullPath()))
+    r.POST("/upload/image", ctl.Image)
+    //token相关
+    r.GET("/getToken", ctl.GetToken)
 
-    //获取控制器
-    auth := controller.NewAuth()
-    saleOrder := controller.NewSaleOrder()
-    upload := controller.NewUpload()
 
-    authG := r.Group("/auth")
+    apiv1 := r.Group("/v1")
     {
-        authG.GET("/getToken", auth.GetToken)
+        //查新列表
+        apiv1.GET("/saleOrder", ctl.List)
+        //查新单个
+        apiv1.GET("/saleOrder/:id", ctl.List)
+        //新建
+        apiv1.POST("/saleOrder", ctl.Create)
+        //更新
+        apiv1.PUT("/saleOrder/:id", ctl.Update)
+        //删除
+        apiv1.DELETE("/saleOrder/:id", ctl.Delete)
 
+
+        apiv1.POST("/kafkaAsyncProducer", ctl.KafkaAsyncProducer)
+        apiv1.POST("/kafkaProducer", ctl.KafkaProducer)
     }
 
-    saleOrderG := r.Group("/saleOrder")
-    //saleOrderG.Use(jwt.JWT());
-    {
-        saleOrderG.GET("/list", saleOrder.List)
-        saleOrderG.POST("/create", saleOrder.Create)
-        saleOrderG.POST("/update", saleOrder.Update)
-        saleOrderG.POST("/delete", saleOrder.Delete)
-        saleOrderG.POST("/kafkaAsyncProducer", saleOrder.KafkaAsyncProducer)
-        saleOrderG.POST("/kafkaProducer", saleOrder.KafkaProducer)
 
-    }
 
-    uploadG := r.Group("/upload")
-    {
-        uploadG.StaticFS("/images", http.Dir(uploadTool.GetImageFullPath()))
-        uploadG.POST("/image", upload.Image)
-    }
+
+
 
     return r
 }

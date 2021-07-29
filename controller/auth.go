@@ -6,12 +6,7 @@ import (
     "gin-example/util/e"
 )
 
-type Auth struct {
-}
-func NewAuth() Auth {
-    return Auth{};
-}
-func (this *Auth) GetToken(c *gin.Context) {
+func  GetToken(c *gin.Context) {
     AuthS := service.Auth{}
     token, err := AuthS.GetToken()
     if err != nil {
